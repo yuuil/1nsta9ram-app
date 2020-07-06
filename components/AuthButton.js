@@ -1,7 +1,8 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import constants from "../constants";
+import { ActivityIndicator } from "react-native";
 
 const Touchable = styled.TouchableOpacity``;
 const Container = styled.View`
@@ -17,16 +18,15 @@ const Text = styled.Text`
   font-weight: 600;
 `;
 
-const AuthButton = ({ text, onPress }) => {
+const AuthButton = ({ text, onPress, loading = false }) => {
   return (
-    <Touchable onPress={onPress}>
+    <Touchable disabled={loading} onPress={onPress}>
       <Container>
-        <Text>{text}</Text>
+        {loading ? <ActivityIndicator color={"white"} /> : <Text>{text}</Text>}
       </Container>
     </Touchable>
   );
 };
-
 
 AuthButton.propTypes = {
   text: PropTypes.string.isRequired,
