@@ -5,7 +5,7 @@ import AuthInput from "../../components/AuthInput";
 import useInput from "../../hooks/useInput";
 import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useMutation } from "react-apollo-hooks";
-import { LOGIN } from "./AuthQueries";
+import { LOG_IN } from "./AuthQueries";
 
 const View = styled.View`
   justify-content: center;
@@ -16,7 +16,7 @@ const View = styled.View`
 const Login = ({ navigation }) => {
   const emailInput = useInput("");
   const [loading, setLoading] = useState(false);
-  const [requestSecretMutation] = useMutation(LOGIN, {
+  const [requestSecretMutation] = useMutation(LOG_IN, {
     variables: {
       email: emailInput.value,
     },
@@ -34,13 +34,12 @@ const Login = ({ navigation }) => {
       const { data: requestSecret } = await requestSecretMutation();
       if (requestSecret) {
         Alert.alert("Check your email");
-        navigation.navigate("Confirm");
+        navigation.navigate("Confirm", { email: value });
       } else {
         Alert.alert("Account not found");
-        navigation.navigate("Signup");
+        navigation.navigate("Signup", { email: value });
       }
     } catch (e) {
-      console.log(e);
       Alert.alert("Can't log in now");
     } finally {
       setLoading(false);
