@@ -6,11 +6,20 @@ import useInput from "../../hooks/useInput";
 import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useMutation } from "react-apollo-hooks";
 import { CREATE_ACCOUNT } from "./AuthQueries";
+import * as Facebook from "expo-facebook";
 
 const View = styled.View`
   justify-content: center;
   align-items: center;
   flex: 1;
+`;
+
+const FBContainer = styled.View`
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top-width: 1px;
+  border-style: solid;
+  border-top-color: ${(props) => props.theme.lightGreyColor};
 `;
 
 const Signup = ({ navigation }) => {
@@ -44,8 +53,8 @@ const Signup = ({ navigation }) => {
     }
     try {
       setLoading(true);
-      const {data: createAccount} =await createAccountMutation();
-      if(createAccount) {
+      const { data: createAccount } = await createAccountMutation();
+      if (createAccount) {
         Alert.alert("Account created", "Log in now!");
         navigation.navigate("Login", { email });
       }
@@ -56,36 +65,66 @@ const Signup = ({ navigation }) => {
       setLoading(false);
     }
   };
+
+  const fbLogin = async () => {
+    try {
+      await Facebook.initializeAsync("308086683912325");
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ["public_profile"],
+      });
+      if (type === "success") {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}`
+        );
+        Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View>
-        <AuthInput
-          {...fNameInput}
-          placeholder="First Name"
-          autoCapitalize="words"
-        />
-        <AuthInput
-          {...lNameInput}
-          placeholder="Last Name"
-          autoCapitalize="words"
-        />
-        <AuthInput
-          {...emailInput}
-          placeholder="Email"
-          keyboardType="email-address"
-          returnKeyType="send"
-          onSubmitEditing={handleSignup}
-          autoCorrect={false}
-        />
-        <AuthInput
-          {...usernameInput}
-          placeholder="Username"
-          returnKeyType="send"
-          autoCorrect={false}
-        />
-        <AuthButton loading={loading} text="Sign up" onPress={handleSignup} />
-      </View>
-    </TouchableWithoutFeedback>
+    <>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <AuthInput
+            {...fNameInput}
+            placeholder="First Name"
+            autoCapitalize="words"
+          />
+          <AuthInput
+            {...lNameInput}
+            placeholder="Last Name"
+            autoCapitalize="words"
+          />
+          <AuthInput
+            {...emailInput}
+            placeholder="Email"
+            keyboardType="email-address"
+            returnKeyType="send"
+            onSubmitEditing={handleSignup}
+            autoCorrect={false}
+          />
+          <AuthInput
+            {...usernameInput}
+            placeholder="Username"
+            returnKeyType="send"
+            autoCorrect={false}
+          />
+          <AuthButton loading={loading} text="Sign up" onPress={handleSignup} />
+          <FBContainer>
+            <AuthButton
+              bgColor={"#4267b2"}
+              loading={false}
+              onPress={fbLogin}
+              text="Connect Facebook"
+            />
+          </FBContainer>
+        </View>
+      </TouchableWithoutFeedback>
+    </>
   );
 };
 

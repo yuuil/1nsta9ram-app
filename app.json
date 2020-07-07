@@ -10,14 +10,15 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "facebookScheme": "fb308086683912325",
+    "facebookAppId": "308086683912325",
+    "facebookDisplayName": "1nsta9ram",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
     },
     "web": {
       "favicon": "./assets/favicon.png"
