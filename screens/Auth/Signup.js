@@ -7,6 +7,7 @@ import { Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useMutation } from "react-apollo-hooks";
 import { CREATE_ACCOUNT } from "./AuthQueries";
 import * as Facebook from "expo-facebook";
+import * as Google from "expo-google-app-auth";
 
 const View = styled.View`
   justify-content: center;
@@ -83,13 +84,7 @@ const Signup = ({ navigation }) => {
           last_name = "",
           first_name = "",
         } = await response.json();
-        if (email) {
-          const [username] = email.split("@");
-          usernameInput.setValue(username);
-        }
-        emailInput.setValue(email);
-        fNameInput.setValue(first_name);
-        lNameInput.setValue(last_name);
+       updateFormData(email, first_name, last_name);
       }
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);
@@ -97,6 +92,42 @@ const Signup = ({ navigation }) => {
       setLoading(false);
     }
   };
+
+  const googleLogin = async () => {
+    const GOOGLE_ID =
+      "595002412456-kqilcsu7ud2sdr2f1urbddpngbt3tib9.apps.googleusercontent.com";
+    try {
+      setLoading(true);
+      const result = await Google.logInAsync({
+        iosClientId: GOOGLE_ID,
+        scopes: ["profile", "email"],
+      });
+      if (result.type === "success") {
+        const user = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+          headers: { Authorization: `Bearer ${result.accessToken}` },
+        });
+        const {email, family_name, given_name} = await user.json();
+        updateFormData(email, given_name, family_name);
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      return { error: true };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateFormData = (email, firstName, lastName) => {
+    if (email) {
+      const [username] = email.split("@");
+      usernameInput.setValue(username);
+    }
+    emailInput.setValue(email);
+    fNameInput.setValue(firstName);
+    lNameInput.setValue(lastName);
+  }
+
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -134,6 +165,12 @@ const Signup = ({ navigation }) => {
               text="Connect Facebook"
             />
           </FBContainer>
+          <AuthButton
+            bgColor={"#EA4435"}
+            loading={false}
+            onPress={googleLogin}
+            text="Connect Google"
+          />
         </View>
       </TouchableWithoutFeedback>
     </>
