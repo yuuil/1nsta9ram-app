@@ -19,7 +19,6 @@ export default function App() {
   const [client, setClient] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const preLoad = async () => {
-    // await AsyncStorage.clear();
     try {
       await Font.loadAsync({
         ...Ionicons.font,
@@ -29,6 +28,7 @@ export default function App() {
         require("./assets/logo.svg"),
         require("./assets/logo-1024.png"),
       ]);
+
       const cache = new InMemoryCache();
       await persistCache({
         cache,
@@ -36,10 +36,16 @@ export default function App() {
       });
       const client = new ApolloClient({
         cache,
+        request: async (operation) => {
+          const token = await AsyncStorage.getItem("jwt");
+          return operation.setContext({
+            headers: { Authorization: `Bearer ${token}` },
+          });
+        },
         ...options,
       });
       const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
-      if(!isLoggedIn || isLoggedIn === "false") {
+      if (!isLoggedIn || isLoggedIn === "false") {
         setIsLoggedIn(false);
       } else {
         setIsLoggedIn(true);
