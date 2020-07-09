@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import Loader from '../components/Loader';
 
 const View = styled.View`
   justify-content: center;
@@ -12,7 +13,7 @@ const Text = styled.Text``;
 const Home = () => {
   return (
     <View>
-      <Text>Home</Text>
+      <Loader />
     </View>
   );
 };
