@@ -17,7 +17,7 @@ export const TOGGLE_LIKE = gql`
 
 const Container = styled.View``;
 const Header = styled.View`
-  padding: 16px 8px;
+  padding: 16px 8px 8px;
   flex-direction: row;
   align-items: center;
 `;
