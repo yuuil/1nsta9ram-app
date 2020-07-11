@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Loader from "../components/Loader";
+import Loader from "../../components/Loader";
 import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import { ScrollView, RefreshControl } from "react-native";
-import Post from "../components/Post";
+import Post from "../../components/Post";
 
 const FEED_QUERY = gql`
   {

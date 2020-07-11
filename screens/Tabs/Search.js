@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../../components/SearchBar";
 
 const View = styled.View`
   justify-content: center;
