@@ -11,6 +11,7 @@ import MessagesLink from "../components/MessagesLink";
 import NavIcon from "../components/NavIcon";
 import { stackStyles } from "./config";
 import styles from "../styles";
+import Comments from "../screens/Comments";
 
 const stackFactory = (initialRoute, customConfig) =>
   createStackNavigator(
@@ -32,6 +33,14 @@ const stackFactory = (initialRoute, customConfig) =>
           title: "Photo",
         },
       },
+      Comments: {
+        screen: Comments,
+        navigationOptions: {
+          headerTintColor: styles.blackColor,
+          headerBackTitleVisible: false,
+          title: "Comment",
+        }
+      }
     },
     {
       defaultNavigationOptions: {

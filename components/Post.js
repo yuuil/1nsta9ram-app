@@ -8,6 +8,7 @@ import constants from "../constants";
 import styles from "../styles";
 import { gql } from "apollo-boost";
 import { useMutation } from "react-apollo-hooks";
+import { withNavigation } from "react-navigation";
 
 export const TOGGLE_LIKE = gql`
   mutation toggelLike($postId: String!) {
@@ -51,6 +52,7 @@ const CommentCount = styled.Text`
 `;
 
 const Post = ({
+  navigation,
   id,
   user,
   location,
@@ -125,7 +127,9 @@ const Post = ({
               />
             </IconContainer>
           </Touchable>
-          <Touchable>
+          <Touchable
+            onPress={() => navigation.navigate("Comments", { comments })}
+          >
             <IconContainer>
               <Ionicons
                 size={24}
@@ -141,7 +145,9 @@ const Post = ({
         <Caption>
           <Bold>{user.username}</Bold> {caption}
         </Caption>
-        <Touchable>
+        <Touchable
+          onPress={() => navigation.navigate("Comments", { comments })}
+        >
           <CommentCount>See all {comments.length} comments</CommentCount>
         </Touchable>
       </InfoContainer>
@@ -171,6 +177,7 @@ Post.propTypes = {
       user: PropTypes.shape({
         id: PropTypes.string.isRequired,
         username: PropTypes.string.isRequired,
+        avatar: PropTypes.string,
       }).isRequired,
     })
   ).isRequired,
@@ -179,4 +186,4 @@ Post.propTypes = {
   createdAt: PropTypes.string.isRequired,
 };
 
-export default Post;
+export default withNavigation(Post);
