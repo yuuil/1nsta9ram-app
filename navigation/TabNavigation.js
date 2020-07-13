@@ -7,11 +7,12 @@ import Search from "../screens/Tabs/Search";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
 import Detail from "../screens/Detail";
+import UserDetail from "../screens/UserDetail";
+import Comments from "../screens/Comments";
 import MessagesLink from "../components/MessagesLink";
 import NavIcon from "../components/NavIcon";
 import { stackStyles } from "./config";
 import styles from "../styles";
-import Comments from "../screens/Comments";
 
 const stackFactory = (initialRoute, customConfig) =>
   createStackNavigator(
@@ -28,22 +29,27 @@ const stackFactory = (initialRoute, customConfig) =>
       Detail: {
         screen: Detail,
         navigationOptions: {
-          headerTintColor: styles.blackColor,
-          headerBackTitleVisible: false,
           title: "Photo",
         },
+      },
+      UserDetail: {
+        screen: UserDetail,
+        navigationOptions: ({ navigation }) => ({
+          title: navigation.getParam("username"),
+        }),
       },
       Comments: {
         screen: Comments,
         navigationOptions: {
           headerTintColor: styles.blackColor,
-          headerBackTitleVisible: false,
           title: "Comment",
-        }
-      }
+        },
+      },
     },
     {
       defaultNavigationOptions: {
+        headerBackTitleVisible: false,
+        headerTintColor: styles.blackColor,
         headerStyle: { ...stackStyles },
       },
     }
