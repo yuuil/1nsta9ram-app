@@ -8,7 +8,8 @@ const NavController = () => {
   const isLoggedIn = useIsLoggedIn();
   return (
     <View style={{ flex: 1 }}>
-      {isLoggedIn ? <MainNavigation /> : <AuthNavigation />}
+      <MainNavigation />
+      {/* {isLoggedIn ? <MainNavigation /> : <AuthNavigation />} */}
     </View>
   );
 };
