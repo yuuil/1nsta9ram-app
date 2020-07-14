@@ -42,11 +42,17 @@ const PhotoTabs = createMaterialTopTabNavigator(
 
 const PhotoNavigation = createStackNavigator(
   {
-    PhotoTabs,
+    Tabs: {
+      screen: PhotoTabs,
+      navigationOptions: {
+        title: "Choose Photo",
+      },
+    },
     UploadPhoto,
   },
   {
     defaultNavigationOptions: {
+      headerBackTitleVisible: false,
       headerStyle: {
         ...stackStyles,
       },

@@ -1191,14 +1191,6 @@
     hoist-non-react-statics "^3.3.2"
     react-native-safe-area-view "^0.14.9"
 
-"@react-navigation/stack@^5.7.0":
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.7.0.tgz#ba8d86919554c9c758e79493b0c828e10faec5d2"
-  integrity sha512-56Q83c5jjVyge++3FjVrvO3QvXyt5LJjFq8txE+qyvdJ4C+oK0b7vQ70ZP5fhXAUCgSvYnHAcV/DVBFz3kiDsg==
-  dependencies:
-    color "^3.1.2"
-    react-native-iphone-x-helper "^1.2.1"
-
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -2520,6 +2512,14 @@ expo-asset@~8.0.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-camera@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-8.0.0.tgz#a0caee7baf1f2013203fe6a4635125ade12ec164"
+  integrity sha512-mtP4NV2R4e+JTXUZBiA0ok4xSzTfRLxirvqJ5T7kjyozuCWUJeOhGk3hqNsBbWhwXDA+hirAge7169UB3vKfDQ==
+  dependencies:
+    lodash "^4.6.0"
+    prop-types "^15.6.0"
+
 expo-constants@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-8.0.0.tgz#e2c5a072dacb4263ccfc57dcb4835ca791960d48"
@@ -2574,6 +2574,11 @@ expo-location@~8.0.0:
   integrity sha512-48i4dUCaqPTwSri79yummKwg6vE6loI7d4iHCrbG4EEuN3fhS8I9xU60CEkoNZTziH9zK0iw4KSjr7DbXUAaCw==
   dependencies:
     invariant "^2.2.4"
+
+expo-media-library@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-8.0.0.tgz#d763a2f39a81348d357171be5ea486679c2edb86"
+  integrity sha512-7TIcJjmQq+sH3deIVjwyQYa3nVsLZZUj6fQYA3R+DrFNRT6ehmd1Lai0klTa7ma3pflPEC4Uv2zOyf53alvD2w==
 
 expo-permissions@~8.0.0:
   version "8.0.0"
