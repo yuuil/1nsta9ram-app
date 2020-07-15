@@ -29,7 +29,7 @@ const TakePhoto = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(false);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
   const takePhoto = async () => {
-    if(!canTakePhoto) {
+    if (!canTakePhoto) {
       return;
     }
     try {
@@ -38,7 +38,7 @@ const TakePhoto = ({ navigation }) => {
         quality: 1,
       });
       const asset = await MediaLibrary.createAssetAsync(uri);
-      console.log(asset);
+      navigation.navigate("Upload", { photo: asset });
     } catch (e) {
       console.log(e);
       setCanTakePhoto(true);

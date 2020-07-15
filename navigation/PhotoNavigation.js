@@ -48,7 +48,12 @@ const PhotoNavigation = createStackNavigator(
         title: "Choose Photo",
       },
     },
-    UploadPhoto,
+    Upload: {
+      screen: UploadPhoto,
+      navigationOptions: {
+        title: "Upload"
+      }
+    },
   },
   {
     defaultNavigationOptions: {
@@ -56,6 +61,7 @@ const PhotoNavigation = createStackNavigator(
       headerStyle: {
         ...stackStyles,
       },
+      headerTintColor: styles.blackColor,
     },
   }
 );
