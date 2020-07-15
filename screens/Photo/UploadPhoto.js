@@ -5,6 +5,19 @@ import styles from "../../styles";
 import constants from "../../constants";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
+import { gql } from "apollo-boost";
+import { useMutation } from "react-apollo-hooks";
+import { FEED_QUERY } from "../Tabs/Home";
+
+const UPLOAD = gql`
+  mutation upload($caption: String!, $files: [String!]!, $location: String) {
+    upload(caption: $caption, files: $files, location: $location) {
+      id
+      caption
+      location
+    }
+  }
+`;
 
 const View = styled.View`
   flex: 1;
@@ -37,40 +50,59 @@ const Text = styled.Text`
 
 const UploadPhoto = ({ navigation }) => {
   const [loading, setIsLoading] = useState(false);
-  const [fileUrl, setFileUrl] = useState("");
   const captionInput = useInput("");
   const locationInput = useInput("");
   const photo = navigation.getParam("photo");
+  const [uploadMutation] = useMutation(UPLOAD, {
+    refetchQueries: () => [{ query: FEED_QUERY }],
+  });
   const handleSubmit = async () => {
     if (captionInput.value === "" || locationInput.value === "") {
       Alert.alert("All fields are required");
     }
-    const name = photo.filename;
-    const [, type] = name.split(".");
     const formData = new FormData();
-    formData.append("file", {
-      name,
-      type: type.toLowerCase(),
-      uri: photo.uri,
+    photo.forEach((p) => {
+      const name = p.filename;
+      const [, type] = name.split(".");
+      formData.append("file", {
+        name,
+        type: type.toLowerCase(),
+        uri: p.uri,
+      });
     });
     try {
+      setIsLoading(true);
       const {
-        data: { path },
+        data: { location },
       } = await axios.post("http://localhost:4000/api/upload", formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
       });
-      setFileUrl(path);
+      const {
+        data: { upload },
+      } = await uploadMutation({
+        variables: {
+          caption: captionInput.value,
+          location: locationInput.value,
+          files: location,
+        },
+      });
+      if (upload.id) {
+        navigation.navigate("TabNavigation");
+      }
     } catch (e) {
+      console.log(e);
       Alert.alert("Can't upload", "Try later");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
     <View>
       <Container>
         <Image
-          source={{ uri: photo.uri }}
+          source={{ uri: photo[0].uri }}
           style={{ width: 80, height: 80, marginRight: 32 }}
         />
         <Form>
