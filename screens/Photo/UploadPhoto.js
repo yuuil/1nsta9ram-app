@@ -112,6 +112,7 @@ const UploadPhoto = ({ navigation }) => {
             placeholder="Caption"
             multiline={true}
             placeholderTextColor={styles.darkGreyColor}
+            autoCorrect={false}
           />
           <STextInput
             onChangeText={locationInput.onChange}
@@ -119,6 +120,7 @@ const UploadPhoto = ({ navigation }) => {
             placeholder="Location"
             multiline={true}
             placeholderTextColor={styles.darkGreyColor}
+            autoCorrect={false}
           />
           <Button onPress={handleSubmit}>
             {loading ? (

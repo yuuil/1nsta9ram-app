@@ -45,6 +45,7 @@ const Button = styled.View`
 `;
 const PostContainer = styled.View`
   flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 const UserProfile = ({
@@ -106,13 +107,19 @@ const UserProfile = ({
           </Button>
         </TouchableOpacity>
       </ButtonContainer>
-      {posts && isGrid ? <PostContainer>
-        {posts.map(post => <SquarePhoto key={post.id} {...post} />)}
-      </PostContainer> : 
-      <>
-      {posts.map(post => <Post key={post.id} {...post} />)}
-      </>
-      }
+      {posts && isGrid ? (
+        <PostContainer>
+          {posts.map((post) => (
+            <SquarePhoto key={post.id} {...post} />
+          ))}
+        </PostContainer>
+      ) : (
+        <>
+          {posts.map((post) => (
+            <Post key={post.id} {...post} />
+          ))}
+        </>
+      )}
     </View>
   );
 };
