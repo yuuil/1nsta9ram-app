@@ -74,7 +74,7 @@ const UploadPhoto = ({ navigation }) => {
       setIsLoading(true);
       const {
         data: { location },
-      } = await axios.post("http://localhost:4000/api/upload", formData, {
+      } = await axios.post("https://insta9ram-backend.herokuapp.com/api/upload", formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
