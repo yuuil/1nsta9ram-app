@@ -34,10 +34,16 @@ const ProfileMeta = styled.View`
   margin-top: 8px;
   padding: 0 16px;
 `;
-const Bio = styled.Text``;
+const Bio = styled.Text`
+  margin-top: 8px;
+`;
 const ButtonContainer = styled.View`
+  border: 0px solid ${styles.lightGreyColor};
+  border-top-width: 1px;
+  border-bottom-width: 1px;
   flex-direction: row;
-  margin-top: 32px;
+  margin-top: 16px;
+  padding: 8px 0;
 `;
 const Button = styled.View`
   width: ${constants.width / 2}px;

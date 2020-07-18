@@ -31,7 +31,7 @@ const Comment = ({ user, text, createdAt }) => {
   const createDate = new Date(createdAt);
   const createDateStr = [
     createDate.getFullYear(),
-    createDate.getMonth(),
+    createDate.getMonth()+1,
     createDate.getDate(),
   ].join(".");
   return (

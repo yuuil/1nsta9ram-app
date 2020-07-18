@@ -30,6 +30,7 @@ const Bold = styled.Text`
   font-weight: 500;
 `;
 const Location = styled.Text`
+  margin-top: 4px;
   font-size: 12px;
 `;
 const IconsContainer = styled.View`
